@@ -1,10 +1,12 @@
 package lab1;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Column
 {
     String columnName;
     String columnType;
+    List<Class<?>> col;
     public Column(String name, String type)
     {
         Class<?> class_def = null;
@@ -17,6 +19,6 @@ public class Column
             System.out.println("Invalid type.");
         }
 
-        List<class_def> col = new ArrayList<>();
+        col = new ArrayList<>();
     }
 }
