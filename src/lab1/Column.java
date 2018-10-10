@@ -2,11 +2,11 @@ package lab1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Column
+public class Column implements Cloneable
 {
     String columnName;
     String columnType;
-    List<Class<?>> col;
+    ArrayList<Class<?>> col;
     public Column(String name, String type)
     {
         Class<?> class_def = null;
@@ -21,4 +21,14 @@ public class Column
 
         col = new ArrayList<>();
     }
+
+    @Override
+    protected Column clone() {
+    try {
+        return (Column) super.clone();
+    } catch (CloneNotSupportedException e) {
+        System.out.println(this.getClass().getName() + " nie implementuje Cloneable...");
+        return null;
+    }
+}
 }

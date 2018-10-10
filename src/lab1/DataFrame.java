@@ -25,6 +25,30 @@ public class DataFrame
         return new Column("nie ma takiej kolumny","none");
     }
 
+    public DataFrame Get(String[] cols, boolean deepCopy)
+    {
+        DataFrame partialFrame = null;
+        for(int i=0;i<cols.length;i++)
+        {
+            for(int j=0;j<columns.size();j++)
+            {
+                if(cols[i].equals(columns.get(j).columnName))
+                {
+                    if(!deepCopy)
+                    {
+                        partialFrame.columns.add(columns.get(j).clone());
+                    }
+                    else
+                    {
+                        partialFrame.columns.add(new Column(columns.get(j).columnName,columns.get(j).columnType));
+                        partialFrame.columns.get(partialFrame.columns.size()-1).col = columns.get(j).col.clone();
+                    }
+                }
+            }
+        }
+        return partialFrame;
+    }
+
     public DataFrame Iloc(int i)
     {
         String[] colnames = new String[columns.size()];
