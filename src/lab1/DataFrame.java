@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 public class DataFrame
 {
+
     ArrayList<Column> columns;
+    public DataFrame()
+    {
+    	columns.clear();
+    	columns.add(new Column("kol1","COOLValue"));
+    }
+    
     public DataFrame(String[] colnames, String[] coltypes)
     {
         columns.clear();
