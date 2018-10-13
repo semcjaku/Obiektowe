@@ -1,6 +1,5 @@
 package lab1;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Column implements Cloneable
 {
@@ -9,17 +8,32 @@ public class Column implements Cloneable
     ArrayList<Class<?>> col;
     public Column(String name, String type)
     {
-        Class<?> class_def = null;
+        //Class<?> class_def = null;
 
         columnName = name;
         columnType = type;
-        try{
+        /*try{
             class_def = Class.forName(type);
         } catch (Exception e) {
             System.out.println("Invalid type.");
-        }
+        }*/
 
         col = new ArrayList<>();
+    }
+
+    public void ColumnToCOOLColumn(Object hide)
+    {
+        ArrayList COOLcol = new ArrayList<COOLValue>();
+        int j=0, originalSize = col.size(), current;
+        while(j<originalSize)
+        {
+            current = col.indexOf(hide);
+            if(current != 0)
+                COOLcol.add(new COOLValue(j,col.get(0)));
+            col.remove(0);
+            j++;
+        }
+        col = (ArrayList<Class<?>>) COOLcol.clone();
     }
 
     @Override

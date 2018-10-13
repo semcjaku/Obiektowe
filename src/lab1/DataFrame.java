@@ -32,7 +32,7 @@ public class DataFrame
         return new Column("nie ma takiej kolumny","none");
     }
 
-    public DataFrame Get(String[] cols, boolean deepCopy)
+    /*public DataFrame Get(String[] cols, boolean deepCopy)
     {
         DataFrame partialFrame = null;
         for(int i=0;i<cols.length;i++)
@@ -54,7 +54,7 @@ public class DataFrame
             }
         }
         return partialFrame;
-    }
+    }*/
 
     public DataFrame Iloc(int i)
     {

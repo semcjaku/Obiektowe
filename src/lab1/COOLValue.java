@@ -7,7 +7,7 @@ public class COOLValue {
 	public COOLValue(int i, Object v)
 	{
 		index = i;
-		value = v.clone();
+		value = v;
 	}
 	
 	public int GetIndex()
@@ -27,7 +27,7 @@ public class COOLValue {
 	
 	public void SetValue(Object x)
 	{
-		value = x.clone();
+		value = x;
 	}
 
 }
