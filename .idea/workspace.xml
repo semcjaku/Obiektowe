@@ -13,7 +13,7 @@
     <session id="-753678085">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.36" value="1" />
@@ -64,7 +64,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="578">
@@ -76,7 +76,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lab1/SparseDataFrame.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1088">
@@ -195,16 +195,15 @@
       <workItem from="1539178413498" duration="9596000" />
       <workItem from="1539261946985" duration="566000" />
       <workItem from="1539431555543" duration="5845000" />
-      <workItem from="1539520596814" duration="4740000" />
+      <workItem from="1539520596814" duration="5273000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25422000" />
+    <option name="totallyTimeSpent" value="25955000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12153518" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -250,16 +249,6 @@
     <entry file="file://$PROJECT_DIR$/lab1/lab1.Column" />
     <entry file="file://$PROJECT_DIR$/lab1/Column" />
     <entry file="file://$PROJECT_DIR$/lab1/DataFrame" />
-    <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lab1/Column.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
@@ -278,6 +267,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
           <caret line="64" column="23" selection-start-line="64" selection-start-column="23" selection-end-line="64" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
