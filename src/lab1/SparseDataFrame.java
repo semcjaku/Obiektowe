@@ -65,4 +65,54 @@ public class SparseDataFrame extends DataFrame {
         return densedf;
     }
 
+    public int Size()
+    {
+        int longest = 0;
+        for(int i=0; i<columns.size();i++)
+        {
+            if(columns.get(i).col.size() > longest)
+                longest = columns.get(i).col.size();
+        }
+        return longest;
+    }
+
+    public DataFrame Iloc(int i)
+    {
+        String[] colnames = new String[columns.size()];
+        String[] coltypes = new String[columns.size()];
+        for(int x=0; x<columns.size(); x++)
+        {
+            colnames[x] = columns.get(x).columnName;
+            coltypes[x] = columns.get(x).columnType;
+        }
+        DataFrame rowOfIndex = new DataFrame(colnames, coltypes);
+        for(int c=0; c<columns.size(); c++)
+        {
+            if(columns.get(c).col.size() >= i)
+                rowOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
+        }
+        return rowOfIndex;
+    }
+
+    public DataFrame Iloc(int from, int to)
+    {
+        String[] colnames = new String[columns.size()];
+        String[] coltypes = new String[columns.size()];
+        for(int x=0; x<columns.size(); x++)
+        {
+            colnames[x] = columns.get(x).columnName;
+            coltypes[x] = columns.get(x).columnType;
+        }
+        DataFrame rowsOfIndex = new DataFrame(colnames, coltypes);
+        for(int i=from; i<to+1; i++)
+        {
+            for(int c=0; c<columns.size(); c++)
+            {
+                if(columns.get(c).col.size() >= i)
+                    rowsOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
+            }
+        }
+        return rowsOfIndex;
+    }
+
 }

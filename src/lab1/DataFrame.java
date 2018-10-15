@@ -65,12 +65,12 @@ public class DataFrame
             colnames[x] = columns.get(x).columnName;
             coltypes[x] = columns.get(x).columnType;
         }
-        DataFrame columnOfIndex = new DataFrame(colnames, coltypes);
+        DataFrame rowOfIndex = new DataFrame(colnames, coltypes);
         for(int c=0; c<columns.size(); c++)
         {
-            columnOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
+            rowOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
         }
-        return columnOfIndex;
+        return rowOfIndex;
     }
 
     public DataFrame Iloc(int from, int to)
@@ -82,15 +82,15 @@ public class DataFrame
             colnames[x] = columns.get(x).columnName;
             coltypes[x] = columns.get(x).columnType;
         }
-        DataFrame columnOfIndex = new DataFrame(colnames, coltypes);
+        DataFrame rowsOfIndex = new DataFrame(colnames, coltypes);
         for(int i=from; i<to+1; i++)
         {
             for(int c=0; c<columns.size(); c++)
             {
-                columnOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
+                rowsOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
             }
         }
-        return columnOfIndex;
+        return rowsOfIndex;
     }
 
     public static void main(String[] argv)
