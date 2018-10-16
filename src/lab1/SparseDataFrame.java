@@ -1,12 +1,15 @@
 package lab1;
 
+import java.util.ArrayList;
+
 public class SparseDataFrame extends DataFrame {
 	public Object hide;
+	ArrayList<COOLColumn> columns;
 	
 	public SparseDataFrame(String[] colnames, String coltype, Object hidden)
 	{
 		for(int i=0; i<colnames.length;i++)
-            columns.add(new Column(colnames[i],coltype));
+            columns.add(new COOLColumn(colnames[i],coltype));
 		hide = hidden;
 	}
 	
@@ -14,7 +17,7 @@ public class SparseDataFrame extends DataFrame {
 	{
 		for(int i=0;i<df.columns.size(); i++)
 		{
-			columns.add(new Column(df.columns.get(i).columnName,df.columns.get(0).columnType));
+			columns.add(new COOLColumn(df.columns.get(i).columnName,df.columns.get(0).columnType));
 			columns.set(i,df.columns.get(i));
 			columns.get(i).ColumnToCOOLColumn(hide);
 		}
