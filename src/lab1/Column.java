@@ -5,7 +5,7 @@ public class Column implements Cloneable
 {
     String columnName;
     String columnType;
-    ArrayList<Class<?>> col;
+    ArrayList<Object> col;
     public Column(String name, String type)
     {
         //Class<?> class_def = null;
@@ -33,7 +33,7 @@ public class Column implements Cloneable
             col.remove(0);
             j++;
         }
-        col = (ArrayList<Class<?>>) COOLcol.clone();
+        col = (ArrayList<Object>) COOLcol.clone();
     }
 
     @Override
