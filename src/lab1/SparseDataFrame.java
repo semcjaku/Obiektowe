@@ -18,8 +18,10 @@ public class SparseDataFrame extends DataFrame {
 		for(int i=0;i<df.columns.size(); i++)
 		{
 			columns.add(new COOLColumn(df.columns.get(i).columnName,df.columns.get(0).columnType));
-			columns.set(i,df.columns.get(i));
-			columns.get(i).ColumnToCOOLColumn(hide);
+			//columns.set(i,df.columns.get(i));
+			//columns.get(i).ColumnToCOOLColumn(hide);
+            Column temp = df.columns.get(i);
+            columns.set(i,temp.ColumnToCOOLColumn(hide));
 		}
 	}
 

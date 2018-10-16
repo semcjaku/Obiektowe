@@ -21,7 +21,7 @@ public class Column implements Cloneable
         col = new ArrayList<>();
     }
 
-    public void ColumnToCOOLColumn(Object hide)
+    public COOLColumn ColumnToCOOLColumn(Object hide)
     {
         ArrayList COOLcol = new ArrayList<COOLValue>();
         int j=0, originalSize = col.size(), current;
@@ -33,7 +33,9 @@ public class Column implements Cloneable
             col.remove(0);
             j++;
         }
-        col = (ArrayList<Object>) COOLcol.clone();
+        COOLColumn result = new COOLColumn(columnName,columnType);
+        result.col = COOLcol;
+        return result;
     }
 
     @Override
