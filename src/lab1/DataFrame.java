@@ -19,6 +19,11 @@ public class DataFrame
             columns.add(new Column(colnames[i],coltypes[i]));
     }
 
+    public DataFrame(String filename, String[] coltypes, Boolean header)
+    {
+        
+    }
+
     public int Size()
     {
         return columns.get(0).col.size();
