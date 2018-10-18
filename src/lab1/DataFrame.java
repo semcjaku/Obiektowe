@@ -187,6 +187,10 @@ public class DataFrame
 
     public static void main(String[] argv)
     {
-
+        String[] types = {"Double","Double","Double"};
+        DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
+        System.out.println(test.columns.get(0).columnName);
+        System.out.println(test.columns.get(1).columnType);
+        System.out.println(test.columns.get(2).col.get(6));
     }
 }
