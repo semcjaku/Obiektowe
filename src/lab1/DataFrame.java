@@ -27,6 +27,7 @@ public class DataFrame
 
     public DataFrame(String filename, String[] coltypes, boolean header)
     {
+        columns = new ArrayList<>();
         BufferedReader br = null;
         try
         {
@@ -191,6 +192,8 @@ public class DataFrame
         DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);
-        System.out.println(test.columns.get(2).col.get(6));
+        System.out.println(test.columns.get(2).col.size());
     }
+
+    //Pole columns nie inicjalizuje się pustą listą tylko nullem - SPRAWDZIĆ CZY NIGDZIE INDZIEJ NIE MA ANALOGICZNYCH BŁĘDÓW
 }
