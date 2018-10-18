@@ -57,9 +57,41 @@ public class DataFrame
             for(int i=0; i<row.length;i++)
             {
                 Class clazz = Class.forName(coltypes[i]);
-                Object x = clazz.newInstance();
-                //tu trzeba zrzutować stringa row[i] na ten obiekt x sprawdzając typ (tylko prymitywne) switchem albo po prostu wciepać same stringi(tylko jaki to ma wtedy sens)
-                columns.get(i).col.add(x);
+                if( Boolean.class == clazz || Boolean.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Boolean.parseBoolean( row[i] ));
+                    break;
+                }
+                if( Byte.class == clazz || Byte.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Byte.parseByte( row[i] ));
+                    break;
+                }
+                if( Short.class == clazz || Short.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Short.parseShort( row[i] ));
+                    break;
+                }
+                if( Integer.class == clazz || Integer.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Integer.parseInt( row[i] ));
+                    break;
+                }
+                if( Long.class == clazz || Long.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Long.parseLong( row[i] ));
+                    break;
+                }
+                if( Float.class == clazz || Float.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Float.parseFloat( row[i] ));
+                    break;
+                }
+                if( Double.class == clazz || Double.TYPE == clazz)
+                {
+                    columns.get(i).col.add(Double.parseDouble( row[i] ));
+                }
+
             }
         }
 
