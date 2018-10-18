@@ -1,7 +1,5 @@
 package lab1;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,73 +27,88 @@ public class DataFrame
 
     public DataFrame(String filename, String[] coltypes, boolean header)
     {
-        FileInputStream fstream = new FileInputStream(filename);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-        String line, name;
-        String[] colnames, row;
+        BufferedReader br = null;
+        try
+        {
+            FileInputStream fstream = new FileInputStream(filename);
+            br = new BufferedReader(new InputStreamReader(fstream));
+            String line, name;
+            String[] colnames, row;
 
-        if(line = br.readLine() != null && header)
-        {
-            colnames = line.split(",");
-            for(int i=0; i<colnames.length;i++)
-                columns.add(new Column(colnames[i],coltypes[i]));
-        }
-        else if(!header)
-        {
-            Scanner keyboard = new Scanner(System.in);
-            for(int i=0; i<coltypes.length;i++)
+            if((line = br.readLine()) != null && header)
             {
-                System.out.println("Enter the name of column number" + (i+1));
-                name = keyboard.nextLine();
-                columns.add(new Column(name,coltypes[i]));
+                colnames = line.split(",");
+                for(int i=0; i<colnames.length;i++)
+                    columns.add(new Column(colnames[i],coltypes[i]));
+            }
+            else if(!header)
+            {
+                Scanner keyboard = new Scanner(System.in);
+                for(int i=0; i<coltypes.length;i++)
+                {
+                    System.out.println("Enter the name of column number" + (i+1));
+                    name = keyboard.nextLine();
+                    columns.add(new Column(name,coltypes[i]));
+                }
+            }
+
+            while((line = br.readLine()) != null)
+            {
+                row = line.split(",");
+                for(int i=0; i<row.length;i++)
+                {
+                    Class clazz = Class.forName(coltypes[i]);
+                    if( Boolean.class == clazz || Boolean.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Boolean.parseBoolean( row[i] ));
+                        break;
+                    }
+                    if( Byte.class == clazz || Byte.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Byte.parseByte( row[i] ));
+                        break;
+                    }
+                    if( Short.class == clazz || Short.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Short.parseShort( row[i] ));
+                        break;
+                    }
+                    if( Integer.class == clazz || Integer.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Integer.parseInt( row[i] ));
+                        break;
+                    }
+                    if( Long.class == clazz || Long.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Long.parseLong( row[i] ));
+                        break;
+                    }
+                    if( Float.class == clazz || Float.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Float.parseFloat( row[i] ));
+                        break;
+                    }
+                    if( Double.class == clazz || Double.TYPE == clazz)
+                    {
+                        columns.get(i).col.add(Double.parseDouble( row[i] ));
+                    }
+
+                }
+            }
+        } catch(FileNotFoundException e) {
+            System.err.println("Caught FileNotFoundException: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch(IOException e) {
+            System.err.println("Caught IOException: " + e.getMessage());
+        } catch(ClassNotFoundException e){
+            System.err.println("Caught ClassNotFoundException: " + e.getMessage());
+        } finally {
+            if (null != br)
+            {
+                try{ br.close(); }
+                catch (IOException e) {System.err.println("Caught IOException while closing reader: " + e.getMessage());}
             }
         }
-
-        while(line = br.readLine() != null)
-        {
-            row = line.split(",");
-            for(int i=0; i<row.length;i++)
-            {
-                Class clazz = Class.forName(coltypes[i]);
-                if( Boolean.class == clazz || Boolean.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Boolean.parseBoolean( row[i] ));
-                    break;
-                }
-                if( Byte.class == clazz || Byte.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Byte.parseByte( row[i] ));
-                    break;
-                }
-                if( Short.class == clazz || Short.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Short.parseShort( row[i] ));
-                    break;
-                }
-                if( Integer.class == clazz || Integer.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Integer.parseInt( row[i] ));
-                    break;
-                }
-                if( Long.class == clazz || Long.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Long.parseLong( row[i] ));
-                    break;
-                }
-                if( Float.class == clazz || Float.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Float.parseFloat( row[i] ));
-                    break;
-                }
-                if( Double.class == clazz || Double.TYPE == clazz)
-                {
-                    columns.get(i).col.add(Double.parseDouble( row[i] ));
-                }
-
-            }
-        }
-
-        br.close();
     }
 
     public int Size()
