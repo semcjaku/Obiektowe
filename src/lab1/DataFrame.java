@@ -9,13 +9,13 @@ public class DataFrame
     ArrayList<Column> columns;
     public DataFrame()
     {
-    	columns.clear();
+        columns = new ArrayList<>();
     	columns.add(new Column("kol1","COOLValue"));
     }
     
     public DataFrame(String[] colnames, String[] coltypes)
     {
-        columns.clear();
+        columns = new ArrayList<>();
         for(int i=0; i<colnames.length;i++)
             columns.add(new Column(colnames[i],coltypes[i]));
     }
@@ -98,16 +98,19 @@ public class DataFrame
             }
         } catch(FileNotFoundException e) {
             System.err.println("Caught FileNotFoundException: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException(e);
         } catch(IOException e) {
             System.err.println("Caught IOException: " + e.getMessage());
+            e.printStackTrace();
         } catch(ClassNotFoundException e){
             System.err.println("Caught ClassNotFoundException: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             if (null != br)
             {
                 try{ br.close(); }
-                catch (IOException e) {System.err.println("Caught IOException while closing reader: " + e.getMessage());}
+                catch (IOException e) {System.err.println("Caught IOException while closing reader: " + e.getMessage());e.printStackTrace();}
             }
         }
     }
@@ -193,6 +196,30 @@ public class DataFrame
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);
         System.out.println(test.columns.get(2).col.size());
+        /*
+        System.out.println(test.Size());
+        System.out.println(test.Iloc(1).columns.get(2).col.get(0));
+        System.out.println(test.Get("last"));
+        System.out.println(test.Iloc(2,5).columns.get(1).col.get(2));
+
+        DataFrame test2 = new DataFrame("/C:/Temp/sparse.csv", types);
+        SparseDataFrame sdf = new SparseDataFrame(test2);
+        System.out.println(sdf.columns.get(0).columnName);
+        System.out.println(sdf.columns.get(1).columnType);
+        System.out.println(sdf.columns.get(2).col.size());
+        System.out.println(sdf.Size());
+        System.out.println(sdf.Iloc(1).columns.get(2).col.get(0));
+        System.out.println(sdf.Get("last"));
+        System.out.println(sdf.Iloc(0,1).columns.get(1).col.get(0));
+        test2 = sdf.ToDense();
+        System.out.println(test2.columns.get(0).columnName);
+        System.out.println(test2.columns.get(1).columnType);
+        System.out.println(test2.columns.get(2).col.size());
+        System.out.println(test2.Size());
+        System.out.println(test2.Iloc(1).columns.get(2).col.get(0));
+        System.out.println(test2.Get("last"));
+        System.out.println(test2.Iloc(2,5).columns.get(1).col.get(2));
+         */
     }
 
     //Pole columns nie inicjalizuje się pustą listą tylko nullem - SPRAWDZIĆ CZY NIGDZIE INDZIEJ NIE MA ANALOGICZNYCH BŁĘDÓW
