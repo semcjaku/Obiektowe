@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class StringValue extends Value
 {
-    public String body;
+    private String body;
 
     public StringValue(String x)
     {
@@ -12,6 +12,11 @@ public class StringValue extends Value
     }
 
     public String toString()
+    {
+        return body;
+    }
+
+    public Object Get()
     {
         return body;
     }

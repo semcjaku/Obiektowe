@@ -2,7 +2,10 @@ package lab1;
 
 public abstract class Value
 {
-    public Object body;
+    private Object body;
+
+    public abstract Object Get();
+
     public abstract String toString();
     public abstract Value add(Value v);
     public abstract Value sub(Value v);

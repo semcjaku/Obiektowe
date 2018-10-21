@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class IntegerValue extends Value
 {
-	public int body;
+	private int body;
 	
 	public IntegerValue(int x)
 	{
@@ -15,25 +15,30 @@ public class IntegerValue extends Value
 	{
 		return String.valueOf(body);
 	}
+
+	public Object Get()
+    {
+        return body;
+    }
 	
     public Value add(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-    	    return (new IntegerValue(body+(int)v.body));
+    	    return (new IntegerValue(body+(int)v.Get()));
         throw (new IllegalArgumentException("Addition unavailable for given type"));
     }
     
     public Value sub(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return (new IntegerValue(body-(int)v.body));
+            return (new IntegerValue(body-(int)v.Get()));
         throw (new IllegalArgumentException("Substitution unavailable for given type"));
     }
     
     public  Value mul(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return (new IntegerValue(body*(int)v.body));
+            return (new IntegerValue(body*(int)v.Get()));
         throw (new IllegalArgumentException("Multiplication unavailable for given type"));
     }
     
@@ -41,8 +46,8 @@ public class IntegerValue extends Value
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
         {
-            if((int)v.body!=0)
-                return(new IntegerValue(body/(int)v.body));
+            if((int)v.Get()!=0)
+                return(new IntegerValue(body/(int)v.Get()));
             else
                 throw (new IllegalArgumentException("Division by zero"));
         }
@@ -54,7 +59,7 @@ public class IntegerValue extends Value
     public  Value pow(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-    	    return(new IntegerValue((int)Math.pow(body, (int)v.body)));
+    	    return(new IntegerValue((int)Math.pow(body, (int)v.Get())));
         else
             throw (new IllegalArgumentException("Exponentiation unavailable for given type"));
     }
@@ -62,7 +67,7 @@ public class IntegerValue extends Value
     public boolean eq(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-    	    return (int)v.body==body;
+    	    return (int)v.Get()==body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
@@ -70,7 +75,7 @@ public class IntegerValue extends Value
     public boolean lte(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body<=(int)v.body;
+            return body<=(int)v.Get();
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
@@ -78,7 +83,7 @@ public class IntegerValue extends Value
     public boolean lt(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body<(int)v.body;
+            return body<(int)v.Get();
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
@@ -86,7 +91,7 @@ public class IntegerValue extends Value
     public boolean gte(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body>=(int)v.body;
+            return body>=(int)v.Get();
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
@@ -94,7 +99,7 @@ public class IntegerValue extends Value
     public boolean gt(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body>(int)v.body;
+            return body>(int)v.Get();
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
