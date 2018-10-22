@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class Column implements Cloneable
 {
     String columnName;
-    String columnType;
-    ArrayList<Object> col;
-    public Column(String name, String type)
+    Class<? extends Value> columnType;
+    ArrayList<Value> col;
+    public Column(String name, Class<? extends Value> type)
     {
         //Class<?> class_def = null;
 

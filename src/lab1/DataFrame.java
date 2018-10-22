@@ -10,22 +10,22 @@ public class DataFrame
     public DataFrame()
     {
         columns = new ArrayList<>();
-    	columns.add(new Column("kol1","COOLValue"));
+    	columns.add(new Column("kol1", COOLValue.class));
     }
     
-    public DataFrame(String[] colnames, String[] coltypes)
+    public DataFrame(String[] colnames, Class<? extends Value>[] coltypes)
     {
         columns = new ArrayList<>();
         for(int i=0; i<colnames.length;i++)
             columns.add(new Column(colnames[i],coltypes[i]));
     }
 
-    public DataFrame(String filename, String[] coltypes)
+    public DataFrame(String filename, Class<? extends Value>[] coltypes)
     {
         this(filename, coltypes, true);
     }
 
-    public DataFrame(String filename, String[] coltypes, boolean header)
+    public DataFrame(String filename, Class<? extends Value>[] coltypes, boolean header)
     {
         columns = new ArrayList<>();
         BufferedReader br = null;
@@ -58,40 +58,25 @@ public class DataFrame
                 row = line.split(",");
                 for(int i=0; i<row.length;i++)
                 {
-                    Class clazz = Class.forName(coltypes[i]);
-                    if( Boolean.class == clazz || Boolean.TYPE == clazz)
+                    Class clazz = coltypes[i];
+                    if( IntegerValue.class == clazz)
                     {
-                        columns.get(i).col.add(Boolean.parseBoolean( row[i] ));
+                        columns.get(i).col.add(new IntegerValue(Integer.parseInt( row[i] )));
                         break;
                     }
-                    if( Byte.class == clazz || Byte.TYPE == clazz)
+                    if( FloatValue.class == clazz)
                     {
-                        columns.get(i).col.add(Byte.parseByte( row[i] ));
+                        columns.get(i).col.add(new FloatValue(Float.parseFloat( row[i] )));
                         break;
                     }
-                    if( Short.class == clazz || Short.TYPE == clazz)
+                    if( DoubleValue.class == clazz)
                     {
-                        columns.get(i).col.add(Short.parseShort( row[i] ));
+                        columns.get(i).col.add(new DoubleValue(Double.parseDouble( row[i] )));
                         break;
                     }
-                    if( Integer.class == clazz || Integer.TYPE == clazz)
+                    if( StringValue.class == clazz)
                     {
-                        columns.get(i).col.add(Integer.parseInt( row[i] ));
-                        break;
-                    }
-                    if( Long.class == clazz || Long.TYPE == clazz)
-                    {
-                        columns.get(i).col.add(Long.parseLong( row[i] ));
-                        break;
-                    }
-                    if( Float.class == clazz || Float.TYPE == clazz)
-                    {
-                        columns.get(i).col.add(Float.parseFloat( row[i] ));
-                        break;
-                    }
-                    if( Double.class == clazz || Double.TYPE == clazz)
-                    {
-                        columns.get(i).col.add(Double.parseDouble( row[i] ));
+                        columns.get(i).col.add(new StringValue(row[i]));
                     }
 
                 }
@@ -102,9 +87,6 @@ public class DataFrame
             throw new RuntimeException(e);
         } catch(IOException e) {
             System.err.println("Caught IOException: " + e.getMessage());
-            e.printStackTrace();
-        } catch(ClassNotFoundException e){
-            System.err.println("Caught ClassNotFoundException: " + e.getMessage());
             e.printStackTrace();
         } finally {
             if (null != br)
@@ -125,7 +107,7 @@ public class DataFrame
         for(Column c:columns)
             if(c.columnName.equals(colname))
                 return c;
-        return new Column("nie ma takiej kolumny","none");
+        throw (new IllegalArgumentException("No such column"));
     }
 
     /*public DataFrame Get(String[] cols, boolean deepCopy)
@@ -155,7 +137,7 @@ public class DataFrame
     public DataFrame Iloc(int i)
     {
         String[] colnames = new String[columns.size()];
-        String[] coltypes = new String[columns.size()];
+        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
@@ -172,7 +154,7 @@ public class DataFrame
     public DataFrame Iloc(int from, int to)
     {
         String[] colnames = new String[columns.size()];
-        String[] coltypes = new String[columns.size()];
+        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
@@ -191,7 +173,7 @@ public class DataFrame
 
     public static void main(String[] argv)
     {
-        String[] types = {"Double","Double","Double"};
+        Class<? extends Value>[] types = {DoubleValue.class, DoubleValue.class, DoubleValue.class};
         DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);

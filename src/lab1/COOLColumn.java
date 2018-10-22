@@ -5,7 +5,7 @@ public class COOLColumn extends Column {
 
     ArrayList<COOLValue> col;
 
-    public COOLColumn(String name, String type)
+    public COOLColumn(String name, Class<? extends Value> type)
     {
         super(name, type);
         col = new ArrayList<COOLValue>();

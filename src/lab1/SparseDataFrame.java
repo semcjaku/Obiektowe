@@ -3,10 +3,10 @@ package lab1;
 import java.util.ArrayList;
 
 public class SparseDataFrame extends DataFrame {
-	public Object hide;
+	public Value hide;
 	ArrayList<COOLColumn> columns;
 	
-	public SparseDataFrame(String[] colnames, String coltype, Object hidden)
+	public SparseDataFrame(String[] colnames, Class<? extends Value> coltype, Value hidden)
 	{
 		for(int i=0; i<colnames.length;i++)
             columns.add(new COOLColumn(colnames[i],coltype));
@@ -27,7 +27,8 @@ public class SparseDataFrame extends DataFrame {
 
 	public DataFrame ToDense()
     {
-        String[] colnames = new String[columns.size()], coltypes = new String[columns.size()];
+        String[] colnames = new String[columns.size()];
+        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
 
         for(int i=0; i<colnames.length; i++)
         {
@@ -48,7 +49,7 @@ public class SparseDataFrame extends DataFrame {
                     densedf.columns.get(i).col.add(hide);
                     currentIndex++;
                 }
-                densedf.columns.get(i).col.add(columns.get(i).col.get(j).GetValue());
+                densedf.columns.get(i).col.add(new Value(columns.get(i).col.get(j).Get()));
             }
         }
 
@@ -84,7 +85,7 @@ public class SparseDataFrame extends DataFrame {
     public DataFrame Iloc(int i)
     {
         String[] colnames = new String[columns.size()];
-        String[] coltypes = new String[columns.size()];
+        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
@@ -102,7 +103,7 @@ public class SparseDataFrame extends DataFrame {
     public DataFrame Iloc(int from, int to)
     {
         String[] colnames = new String[columns.size()];
-        String[] coltypes = new String[columns.size()];
+        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
