@@ -137,7 +137,7 @@ public class DataFrame
     public DataFrame Iloc(int i)
     {
         String[] colnames = new String[columns.size()];
-        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
+        Class<? extends Value>[] coltypes = (Class<? extends Value>[]) new Class<?>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
@@ -154,7 +154,7 @@ public class DataFrame
     public DataFrame Iloc(int from, int to)
     {
         String[] colnames = new String[columns.size()];
-        Class<? extends Value>[] coltypes = new Class<? extends Value>[columns.size()];
+        Class<? extends Value>[] coltypes = (Class<? extends Value>[]) new Class<?>[columns.size()];
         for(int x=0; x<columns.size(); x++)
         {
             colnames[x] = columns.get(x).columnName;
@@ -173,36 +173,37 @@ public class DataFrame
 
     public static void main(String[] argv)
     {
-        Class<? extends Value>[] types = {DoubleValue.class, DoubleValue.class, DoubleValue.class};
+        Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[3];
+        for(int i=0;i<types.length;i++)
+            types[i]=DoubleValue.class;
         DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);
         System.out.println(test.columns.get(2).col.size());
-        /*
+
         System.out.println(test.Size());
-        System.out.println(test.Iloc(1).columns.get(2).col.get(0));
+        //System.out.println(test.Iloc(1).columns.get(2).col.get(0));
         System.out.println(test.Get("last"));
-        System.out.println(test.Iloc(2,5).columns.get(1).col.get(2));
+        //System.out.println(test.Iloc(2,5).columns.get(1).col.get(2));
 
         DataFrame test2 = new DataFrame("/C:/Temp/sparse.csv", types);
-        SparseDataFrame sdf = new SparseDataFrame(test2);
+        SparseDataFrame sdf = new SparseDataFrame(test2); //Nullptr exception
         System.out.println(sdf.columns.get(0).columnName);
         System.out.println(sdf.columns.get(1).columnType);
         System.out.println(sdf.columns.get(2).col.size());
         System.out.println(sdf.Size());
-        System.out.println(sdf.Iloc(1).columns.get(2).col.get(0));
-        System.out.println(sdf.Get("last"));
-        System.out.println(sdf.Iloc(0,1).columns.get(1).col.get(0));
+        //System.out.println(sdf.Iloc(1).columns.get(2).col.get(0));
+        //System.out.println(sdf.Get("last"));
+        //System.out.println(sdf.Iloc(0,1).columns.get(1).col.get(0));
         test2 = sdf.ToDense();
         System.out.println(test2.columns.get(0).columnName);
         System.out.println(test2.columns.get(1).columnType);
         System.out.println(test2.columns.get(2).col.size());
         System.out.println(test2.Size());
-        System.out.println(test2.Iloc(1).columns.get(2).col.get(0));
-        System.out.println(test2.Get("last"));
-        System.out.println(test2.Iloc(2,5).columns.get(1).col.get(2));
-         */
+        //System.out.println(test2.Iloc(1).columns.get(2).col.get(0));
+        //System.out.println(test2.Get("last"));
+        //System.out.println(test2.Iloc(2,5).columns.get(1).col.get(2));
+
     }
 
-    //Pole columns nie inicjalizuje się pustą listą tylko nullem - SPRAWDZIĆ CZY NIGDZIE INDZIEJ NIE MA ANALOGICZNYCH BŁĘDÓW
 }
