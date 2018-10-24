@@ -49,7 +49,7 @@ public class SparseDataFrame extends DataFrame {
                     densedf.columns.get(i).col.add(hide);
                     currentIndex++;
                 }
-                densedf.columns.get(i).col.add(new Value(columns.get(i).col.get(j).Get()));
+                densedf.columns.get(i).col.add(columns.get(i).col.get(j).Get());
             }
         }
 

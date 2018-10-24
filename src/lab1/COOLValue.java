@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class COOLValue extends Value{
 	private int index;
-	private Object body;
+	private Value body;
 	
-	public COOLValue(int i, Object v)
+	public COOLValue(int i, Value v)
 	{
 		index = i;
 		body = v;
@@ -22,12 +22,12 @@ public class COOLValue extends Value{
 		index = x;
 	}
 	
-	public Object Get()
+	public Value Get()
 	{
 		return body;
 	}
 	
-	public void SetValue(Object x)
+	public void SetValue(Value x)
 	{
 		body = x;
 	}
