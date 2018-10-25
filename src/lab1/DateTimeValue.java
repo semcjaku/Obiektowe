@@ -1,5 +1,7 @@
 package lab1;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -86,5 +88,19 @@ public class DateTimeValue extends Value{
         return Objects.hash(body);
     }
 
-    public Value create(String s);
+    public Value create(String s)
+    {
+        DateFormat tmp1=null;
+        Date tmp=null;
+        try
+        {
+            tmp = tmp1.parse(s);
+            return new DateTimeValue(tmp);
+        } catch(ParseException e)
+        {
+            System.err.println("Tworzenie daty ze stringa nie zadziałało.");
+            e.printStackTrace();
+        }
+
+    }
 }
