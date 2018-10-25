@@ -23,8 +23,19 @@ public class DateTimeValue extends Value{
         return body.toString();
     }
 
-    public Value add(Value v);
-    public Value sub(Value v);
+    public Value add(Value v)
+    {
+        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+            return (new DateTimeValue(new Date(body.getTime()+(long)v.Get())));
+        throw (new IllegalArgumentException("Addition unavailable for given type"));
+    }
+
+    public Value sub(Value v)
+    {
+        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+            return (new DateTimeValue(new Date(body.getTime()-(long)v.Get())));
+        throw (new IllegalArgumentException("Addition unavailable for given type"));
+    }
 
     public Value mul(Value v) {throw new RuntimeException("Invalid operation for DateTimeValue type");}
     public Value div(Value v) {throw new RuntimeException("Invalid operation for DateTimeValue type");}
@@ -95,12 +106,11 @@ public class DateTimeValue extends Value{
         try
         {
             tmp = tmp1.parse(s);
-            return new DateTimeValue(tmp);
         } catch(ParseException e)
         {
             System.err.println("Tworzenie daty ze stringa nie zadziałało.");
             e.printStackTrace();
         }
-
+        return new DateTimeValue(tmp);
     }
 }
