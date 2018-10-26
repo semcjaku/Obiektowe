@@ -62,21 +62,27 @@ public class DataFrame
                     if( IntegerValue.class == clazz)
                     {
                         columns.get(i).col.add(new IntegerValue(Integer.parseInt( row[i] )));
-                        break;
+                        continue;
                     }
                     if( FloatValue.class == clazz)
                     {
                         columns.get(i).col.add(new FloatValue(Float.parseFloat( row[i] )));
-                        break;
+                        continue;
                     }
                     if( DoubleValue.class == clazz)
                     {
                         columns.get(i).col.add(new DoubleValue(Double.parseDouble( row[i] )));
-                        break;
+                        continue;
                     }
                     if( StringValue.class == clazz)
                     {
                         columns.get(i).col.add(new StringValue(row[i]));
+                        continue;
+                    }
+                    if( DateTimeValue.class == clazz)
+                    {
+                        DateTimeValue dtv = null;
+                        columns.get(i).col.add(dtv.create(row[i]));
                     }
 
                 }
@@ -179,31 +185,21 @@ public class DataFrame
         DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);
-        System.out.println(test.columns.get(2).col.size());
-
+        System.out.println(test.columns.get(1).col.size());
         System.out.println(test.Size());
-        //System.out.println(test.Iloc(1).columns.get(2).col.get(0));
-        System.out.println(test.Get("last"));
-        //System.out.println(test.Iloc(2,5).columns.get(1).col.get(2));
 
         DataFrame test2 = new DataFrame("/C:/Temp/sparse.csv", types);
         SparseDataFrame sdf = new SparseDataFrame(test2); //Nullptr exception
         System.out.println(sdf.columns.get(0).columnName);
         System.out.println(sdf.columns.get(1).columnType);
-        System.out.println(sdf.columns.get(2).col.size());
+        System.out.println(sdf.columns.get(1).col.size());
         System.out.println(sdf.Size());
-        //System.out.println(sdf.Iloc(1).columns.get(2).col.get(0));
-        //System.out.println(sdf.Get("last"));
-        //System.out.println(sdf.Iloc(0,1).columns.get(1).col.get(0));
-        test2 = sdf.ToDense();
-        System.out.println(test2.columns.get(0).columnName);
-        System.out.println(test2.columns.get(1).columnType);
-        System.out.println(test2.columns.get(2).col.size());
-        System.out.println(test2.Size());
-        //System.out.println(test2.Iloc(1).columns.get(2).col.get(0));
-        //System.out.println(test2.Get("last"));
-        //System.out.println(test2.Iloc(2,5).columns.get(1).col.get(2));
 
+        DataFrame test3 = sdf.ToDense();
+        System.out.println(test3.columns.get(0).columnName);
+        System.out.println(test3.columns.get(1).columnType);
+        System.out.println(test3.columns.get(1).col.size());
+        System.out.println(test3.Size());
     }
 
 }
