@@ -186,13 +186,16 @@ public class DataFrame
         System.out.println(test.columns.get(0).columnName);
         System.out.println(test.columns.get(1).columnType);
         System.out.println(test.columns.get(1).col.size());
+        //System.out.println(test.Iloc(0,3).columns.get(2).col.get(1).Get());
+        //System.out.println(test.Get("x").col.get(15).Get());
         System.out.println(test.Size());
 
         DataFrame test2 = new DataFrame("/C:/Temp/sparse.csv", types);
-        SparseDataFrame sdf = new SparseDataFrame(test2); //Nullptr exception
+        SparseDataFrame sdf = new SparseDataFrame(test2,new DoubleValue(0.0)); //Nullptr exception
         System.out.println(sdf.columns.get(0).columnName);
         System.out.println(sdf.columns.get(1).columnType);
-        System.out.println(sdf.columns.get(1).col.size());
+        System.out.println(sdf.columns.get(0).col.size());
+        System.out.println(sdf.columns.get(0).col.get(0).Get());
         System.out.println(sdf.Size());
 
         DataFrame test3 = sdf.ToDense();
@@ -200,6 +203,20 @@ public class DataFrame
         System.out.println(test3.columns.get(1).columnType);
         System.out.println(test3.columns.get(1).col.size());
         System.out.println(test3.Size());
+
+        Value testValue = new IntegerValue(5);
+        System.out.println(testValue.add(new IntegerValue(1)).Get());
+        System.out.println(testValue.sub(new IntegerValue(1)).Get());
+        System.out.println(testValue.mul(new IntegerValue(2)).Get());
+        System.out.println(testValue.div(new IntegerValue(3)).Get());
+        System.out.println(testValue.pow(new IntegerValue(2)).Get());
+
+        System.out.println(testValue.lt(new IntegerValue(1)));
+        System.out.println(testValue.lte(new IntegerValue(1)));
+        System.out.println(testValue.gt(new IntegerValue(1)));
+        System.out.println(testValue.gte(new IntegerValue(1)));
+        System.out.println(testValue.eq(new IntegerValue(1)));
+        System.out.println(testValue.neq(new IntegerValue(1)));
     }
 
 }

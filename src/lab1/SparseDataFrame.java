@@ -14,9 +14,10 @@ public class SparseDataFrame extends DataFrame {
 		hide = hidden;
 	}
 	
-	public SparseDataFrame(DataFrame df)
+	public SparseDataFrame(DataFrame df,Value hidden)
 	{
         columns = new ArrayList<>();
+        hide = hidden;
 		for(int i=0;i<df.columns.size(); i++)
 		{
 			columns.add(new COOLColumn(df.columns.get(i).columnName,df.columns.get(0).columnType));
@@ -34,8 +35,8 @@ public class SparseDataFrame extends DataFrame {
 
         for(int i=0; i<colnames.length; i++)
         {
-            colnames[i] = columns.get(0).columnName;
-            coltypes[i] = columns.get(0).columnType;
+            colnames[i] = columns.get(i).columnName;
+            coltypes[i] = columns.get(i).columnType;
         }
 
         DataFrame densedf = new DataFrame(colnames, coltypes);
@@ -52,6 +53,7 @@ public class SparseDataFrame extends DataFrame {
                     currentIndex++;
                 }
                 densedf.columns.get(i).col.add(columns.get(i).col.get(j).Get());
+                currentIndex++;
             }
         }
 
@@ -66,7 +68,7 @@ public class SparseDataFrame extends DataFrame {
         {
             x = densedf.columns.get(i).col.size();
             if(x < longest)
-                for(int j=1; j<=x; j++)
+                for(int j=1; j<=longest-x; j++)
                     densedf.columns.get(i).col.add(hide);
         }
 
