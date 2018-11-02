@@ -1,6 +1,6 @@
 package lab1;
 
-public abstract class Value
+public abstract class Value implements Cloneable
 {
     private Object body;
 
@@ -21,4 +21,14 @@ public abstract class Value
     public abstract boolean equals(Object other);
     public abstract int hashCode();
     public abstract Value create(String s);
+
+    @Override
+    protected Value clone() {
+        try {
+            return (Value) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(this.getClass().getName() + " nie implementuje Cloneable...");
+            return null;
+        }
+    }
 }

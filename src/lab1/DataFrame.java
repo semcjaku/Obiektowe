@@ -1,6 +1,7 @@
 package lab1;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DataFrame
@@ -175,6 +176,33 @@ public class DataFrame
             }
         }
         return rowsOfIndex;
+    }
+
+    public HashMap<Value,DataFrame> groupby(String colname)
+    {
+        HashMap<Value, DataFrame> hashMap = new HashMap<Value, DataFrame>();
+        int indexOfBy = -1;
+        for (Column c:columns)
+            if (c.columnName.equals(colname))
+            {
+                indexOfBy = columns.indexOf(c);
+                break;
+            }
+        if(indexOfBy==-1)
+            throw new RuntimeException("No such column");
+
+        for(int i=0; i<this.Size();i++)
+        {
+            if (!hashMap.containsKey(columns.get(indexOfBy).col.get(i)))
+            {
+                hashMap.put(columns.get(indexOfBy).col.get(i), this.Iloc(i));
+            }
+            else
+            {
+                hashMap.get(columns.get(indexOfBy).col.get(i)).columns.addAll(this.Iloc(i).columns);
+            }
+        }
+        return hashMap;
     }
 
     public static void main(String[] argv)
