@@ -11,7 +11,6 @@ public class DataFrame
     public DataFrame()
     {
         columns = new ArrayList<>();
-    	columns.add(new Column("kol1", COOLValue.class));
     }
     
     public DataFrame(String[] colnames, Class<? extends Value>[] coltypes)
@@ -178,9 +177,9 @@ public class DataFrame
         return rowsOfIndex;
     }
 
-    public HashMap<Value,DataFrame> groupby(String colname)
+    public GroupWrapper groupby(String colname)
     {
-        HashMap<Value, DataFrame> hashMap = new HashMap<Value, DataFrame>();
+        HashMap<Value, DataFrame> groupingResult = new HashMap<Value, DataFrame>();
         int indexOfBy = -1;
         for (Column c:columns)
             if (c.columnName.equals(colname))
@@ -193,16 +192,16 @@ public class DataFrame
 
         for(int i=0; i<this.Size();i++)
         {
-            if (!hashMap.containsKey(columns.get(indexOfBy).col.get(i)))
+            if (!groupingResult.containsKey(columns.get(indexOfBy).col.get(i)))
             {
-                hashMap.put(columns.get(indexOfBy).col.get(i), this.Iloc(i));
+                groupingResult.put(columns.get(indexOfBy).col.get(i), this.Iloc(i));
             }
             else
             {
-                hashMap.get(columns.get(indexOfBy).col.get(i)).columns.addAll(this.Iloc(i).columns);
+                groupingResult.get(columns.get(indexOfBy).col.get(i)).columns.addAll(this.Iloc(i).columns);
             }
         }
-        return hashMap;
+        return new GroupWrapper(groupingResult);
     }
 
     public static void main(String[] argv)

@@ -17,6 +17,7 @@
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.104" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.130" value="1" />
           <entry key="project.open.time.145" value="1" />
           <entry key="project.open.time.157" value="1" />
           <entry key="project.open.time.34" value="1" />
@@ -33,7 +34,7 @@
           <entry key="project.open.time.80" value="1" />
           <entry key="project.open.time.9" value="1" />
           <entry key="project.open.time.91" value="1" />
-          <entry key="project.opened" value="25" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -55,13 +56,13 @@
         <counts>
           <entry key="Column" value="316" />
           <entry key="DataFrame" value="471" />
-          <entry key="java" value="7118" />
+          <entry key="java" value="7821" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CLASS" value="5" />
-          <entry key="JAVA" value="7900" />
+          <entry key="JAVA" value="8603" />
         </counts>
       </usages-collector>
     </session>
@@ -71,8 +72,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lab1/Value.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+            <state relative-caret-position="408">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -80,10 +81,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="721">
-              <caret line="246" column="63" selection-start-line="246" selection-start-column="63" selection-end-line="246" selection-end-column="63" />
+            <state relative-caret-position="153">
+              <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
               <folding>
-                <element signature="e#6159#6177#0" expanded="true" />
+                <element signature="e#197#198#0" expanded="true" />
+                <element signature="e#240#241#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,8 +103,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lab1/GroupWrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="44" selection-start-line="2" selection-start-column="44" selection-end-line="2" selection-end-column="44" />
+            <state relative-caret-position="498">
+              <caret line="49" column="55" selection-start-line="49" selection-start-column="55" selection-end-line="49" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lab1/SparseDataFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="27" column="9" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="27" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -111,16 +125,7 @@
         <entry file="file://$PROJECT_DIR$/src/lab1/Groupby.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="33" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="10" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lab1/SparseDataFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+              <caret line="10" column="33" selection-start-line="4" selection-start-column="4" selection-end-line="10" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -150,12 +155,12 @@
         <option value="$PROJECT_DIR$/src/lab1/DoubleValue.java" />
         <option value="$PROJECT_DIR$/src/lab1/COOLValue.java" />
         <option value="$PROJECT_DIR$/src/lab1/DateTimeValue.java" />
-        <option value="$PROJECT_DIR$/src/lab1/SparseDataFrame.java" />
         <option value="$PROJECT_DIR$/src/lab1/IntegerValue.java" />
         <option value="$PROJECT_DIR$/src/lab1/Applyable.java" />
         <option value="$PROJECT_DIR$/src/lab1/Value.java" />
-        <option value="$PROJECT_DIR$/src/lab1/DataFrame.java" />
         <option value="$PROJECT_DIR$/src/lab1/Groupby.java" />
+        <option value="$PROJECT_DIR$/src/lab1/DataFrame.java" />
+        <option value="$PROJECT_DIR$/src/lab1/SparseDataFrame.java" />
         <option value="$PROJECT_DIR$/src/lab1/GroupWrapper.java" />
       </list>
     </option>
@@ -177,8 +182,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -206,7 +211,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541176199001" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541251055974" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.build" />
   </component>
@@ -277,17 +282,18 @@
       <workItem from="1540546626497" duration="1391000" />
       <workItem from="1540892288430" duration="8333000" />
       <workItem from="1541172800575" duration="3304000" />
+      <workItem from="1541244550896" duration="5764000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87576000" />
+    <option name="totallyTimeSpent" value="93340000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14925373" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14372164" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -296,7 +302,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3286334" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -409,13 +415,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lab1/SparseDataFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lab1/Column.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="721">
@@ -432,18 +431,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lab1/Value.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+        <state relative-caret-position="408">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/lab1/Groupby.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="721">
-          <caret line="246" column="63" selection-start-line="246" selection-start-column="63" selection-end-line="246" selection-end-column="63" />
-          <folding>
-            <element signature="e#6159#6177#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="10" column="33" selection-start-line="4" selection-start-column="4" selection-end-line="10" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -454,17 +450,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lab1/Groupby.java">
+    <entry file="file://$PROJECT_DIR$/src/lab1/DataFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="33" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="10" selection-end-column="33" />
+        <state relative-caret-position="153">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+          <folding>
+            <element signature="e#197#198#0" expanded="true" />
+            <element signature="e#240#241#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lab1/SparseDataFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="9" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="27" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lab1/GroupWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="44" selection-start-line="2" selection-start-column="44" selection-end-line="2" selection-end-column="44" />
+        <state relative-caret-position="498">
+          <caret line="49" column="55" selection-start-line="49" selection-start-column="55" selection-end-line="49" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
