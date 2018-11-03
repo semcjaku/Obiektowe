@@ -201,7 +201,7 @@ public class DataFrame
                 groupingResult.get(columns.get(indexOfBy).col.get(i)).columns.addAll(this.Iloc(i).columns);
             }
         }
-        return new GroupWrapper(groupingResult);
+        return new GroupWrapper(groupingResult,indexOfBy);
     }
 
     public static void main(String[] argv)
