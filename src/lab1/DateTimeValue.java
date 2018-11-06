@@ -2,7 +2,9 @@ package lab1;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class DateTimeValue extends Value{
@@ -26,7 +28,7 @@ public class DateTimeValue extends Value{
     public Value add(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return (new DateTimeValue(new Date(body.getTime()+(long)v.Get())));
+            return (new DateTimeValue(new Date(body.getTime()+(long)(v.Get()))));
         throw (new IllegalArgumentException("Addition unavailable for given type"));
     }
 
@@ -101,7 +103,7 @@ public class DateTimeValue extends Value{
 
     public Value create(String s)
     {
-        DateFormat tmp1=null;
+        DateFormat tmp1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date tmp=null;
         try
         {

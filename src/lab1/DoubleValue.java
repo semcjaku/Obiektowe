@@ -46,8 +46,8 @@ public class DoubleValue extends Value
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
         {
-            if((double)v.Get()!=0.0)
-                return(new DoubleValue(body/(double)v.Get()));
+            if((double)((int)(v.Get()))!=0.0)
+                return(new DoubleValue(body/(double)((int)(v.Get()))));
             else
                 throw (new IllegalArgumentException("Division by zero"));
         }

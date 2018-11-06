@@ -1,6 +1,7 @@
 package lab1;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -81,7 +82,7 @@ public class DataFrame
                     }
                     if( DateTimeValue.class == clazz)
                     {
-                        DateTimeValue dtv = null;
+                        DateTimeValue dtv = new DateTimeValue(new Date());
                         columns.get(i).col.add(dtv.create(row[i]));
                     }
 
@@ -150,7 +151,7 @@ public class DataFrame
             coltypes[x] = columns.get(x).columnType;
         }
         DataFrame rowOfIndex = new DataFrame(colnames, coltypes);
-        for(int c=0; c<columns.size(); c++)
+        for(int c=0; c<rowOfIndex.columns.size(); c++)
         {
             rowOfIndex.columns.get(c).col.add(columns.get(c).col.get(i));
         }
@@ -177,6 +178,16 @@ public class DataFrame
         return rowsOfIndex;
     }
 
+    public void addRow(DataFrame newRow)
+    {
+        if(newRow.columns.size()!=columns.size())
+            throw new RuntimeException("Added row has different size than the data frame.");
+        for(int i=0;i<columns.size();i++)
+        {
+            columns.get(i).col.add(newRow.columns.get(i).col.get(0));
+        }
+    }
+
     public GroupWrapper groupby(String colname)
     {
         HashMap<Value, DataFrame> groupingResult = new HashMap<Value, DataFrame>();
@@ -198,52 +209,76 @@ public class DataFrame
             }
             else
             {
-                groupingResult.get(columns.get(indexOfBy).col.get(i)).columns.addAll(this.Iloc(i).columns);
+                groupingResult.get(columns.get(indexOfBy).col.get(i)).addRow(this.Iloc(i));
             }
         }
         return new GroupWrapper(groupingResult,indexOfBy);
+
+        //different, unworking version
+        /*int[] indicesOfBy = new int[colnames.length];
+        for(int i=0;i<indicesOfBy.length;i++)
+            indicesOfBy[i]=-1;
+
+        for(int i=0;i<indicesOfBy.length;i++)
+        {
+            for (Column c:columns)
+                if (c.columnName.equals(colnames[i]))
+                {
+                    indicesOfBy[i] = columns.indexOf(c);
+                    break;
+                }
+        }
+        for(int id : indicesOfBy)
+            if(id==-1)
+                throw new RuntimeException("No such column");*/
+    }
+
+    /*public GroupWrapper groupby(String[] colnames)
+    {
+        GroupWrapper result = this.groupby(colnames[0]);
+        DataFrame tmpDf = null;
+        for(int i=1;i<colnames.length;i++)
+        {
+            for (HashMap.Entry<Value, DataFrame> entry : result.group.entrySet())
+            {
+                entry.getValue().groupby(colnames[i]);
+            }
+        }
+        return result;
+    }*/
+
+    public void DisplayRow(int index)
+    {
+        DataFrame tmp = this.Iloc(index);
+        for(int i=0;i<tmp.columns.size();i++)
+            System.out.print(tmp.columns.get(i).col.get(0).toString()+' ');
+        System.out.println();
+    }
+
+    public void Display()
+    {
+        for(Column c:columns)
+            System.out.print(c.columnName+' ');
+        System.out.println();
+        for(int i=0;i<this.Size();i++)
+            this.DisplayRow(i);
     }
 
     public static void main(String[] argv)
     {
-        Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[3];
-        for(int i=0;i<types.length;i++)
-            types[i]=DoubleValue.class;
-        DataFrame test = new DataFrame("/C:/Temp/data.csv", types);
-        System.out.println(test.columns.get(0).columnName);
-        System.out.println(test.columns.get(1).columnType);
-        System.out.println(test.columns.get(1).col.size());
-        //System.out.println(test.Iloc(0,3).columns.get(2).col.get(1).Get());
-        //System.out.println(test.Get("x").col.get(15).Get());
-        System.out.println(test.Size());
-
-        DataFrame test2 = new DataFrame("/C:/Temp/sparse.csv", types);
-        SparseDataFrame sdf = new SparseDataFrame(test2,new DoubleValue(0.0)); //Nullptr exception
-        System.out.println(sdf.columns.get(0).columnName);
-        System.out.println(sdf.columns.get(1).columnType);
-        System.out.println(sdf.columns.get(0).col.size());
-        System.out.println(sdf.columns.get(0).col.get(0).Get());
-        System.out.println(sdf.Size());
-
-        DataFrame test3 = sdf.ToDense();
-        System.out.println(test3.columns.get(0).columnName);
-        System.out.println(test3.columns.get(1).columnType);
-        System.out.println(test3.columns.get(1).col.size());
-        System.out.println(test3.Size());
-
-        Value testValue = new IntegerValue(5);
-        System.out.println(testValue.add(new IntegerValue(1)).Get());
-        System.out.println(testValue.sub(new IntegerValue(1)).Get());
-        System.out.println(testValue.mul(new IntegerValue(2)).Get());
-        System.out.println(testValue.div(new IntegerValue(3)).Get());
-        System.out.println(testValue.pow(new IntegerValue(2)).Get());
-
-        System.out.println(testValue.lt(new IntegerValue(1)));
-        System.out.println(testValue.lte(new IntegerValue(1)));
-        System.out.println(testValue.gt(new IntegerValue(1)));
-        System.out.println(testValue.gte(new IntegerValue(1)));
-        System.out.println(testValue.eq(new IntegerValue(1)));
-        System.out.println(testValue.neq(new IntegerValue(1)));
+        Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
+        types[0] = StringValue.class;
+        types[1] = DateTimeValue.class;
+        types[2] = DoubleValue.class;
+        types[3] = DoubleValue.class;
+        DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
+        //test.groupby("id").max().Display();
+        //test.groupby("id").min().Display();
+        //test.groupby("id").mean().Display();
+        System.out.println(test.groupby("id").mean().columns.get(0).col.size());
+        //test.groupby("id").std().Display();
+        //test.groupby("id").var().Display();
+        //test.groupby("id").sum().Display();
     }
-
+        //DoubleValue ma chwilowo oszukane castowanie -> do poprawy we wszystkich Value
 }
