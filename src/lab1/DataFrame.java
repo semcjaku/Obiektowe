@@ -275,9 +275,8 @@ public class DataFrame
         //test.groupby("id").max().Display();
         //test.groupby("id").min().Display();
         //test.groupby("id").mean().Display();
-        System.out.println(test.groupby("id").mean().columns.get(0).col.size());
-        //test.groupby("id").std().Display();
-        //test.groupby("id").var().Display();
+        test.groupby("id").std().Display();
+        test.groupby("id").var().Display();
         //test.groupby("id").sum().Display();
     }
         //DoubleValue ma chwilowo oszukane castowanie -> do poprawy we wszystkich Value

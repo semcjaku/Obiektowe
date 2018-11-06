@@ -116,13 +116,16 @@ public class GroupWrapper implements Groupby
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
                 if(i==indexOfGroupingColumn)
+                {
+                    resultIndex++;
                     continue;
+                }
                 sum = entry.getValue().columns.get(i).col.get(0);
                 if(sum instanceof DateTimeValue || sum instanceof StringValue)
                     continue;
                 for(int j=1;j<entry.getValue().Size();j++)
                 {
-                    sum.add(entry.getValue().columns.get(i).col.get(j));
+                    sum = sum.add(entry.getValue().columns.get(i).col.get(j));
                 }
                 result.columns.get(resultIndex).col.add(sum.div(new IntegerValue(entry.getValue().Size())));
                 resultIndex++;
@@ -151,20 +154,28 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForOperations();
         Value sum=null;
+        int resultIndex;
 
         for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn).col.add(entry.getValue().columns.get(indexOfGroupingColumn).col.get(0));
+            result.columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.add(entry.getValue().columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.get(0));
+            resultIndex=0;
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
                 if(i==indexOfGroupingColumn)
+                {
+                    resultIndex++;
                     continue;
+                }
                 sum = entry.getValue().columns.get(i).col.get(0);
+                if(sum instanceof DateTimeValue || sum instanceof StringValue)
+                    continue;
                 for(int j=1;j<entry.getValue().Size();j++)
                 {
-                    sum.add(entry.getValue().columns.get(i).col.get(j));
+                    sum = sum.add(entry.getValue().columns.get(i).col.get(j));
                 }
-                result.columns.get(i).col.add(sum);
+                result.columns.get(resultIndex).col.add(sum);
+                resultIndex++;
             }
         }
         return result;
@@ -175,21 +186,28 @@ public class GroupWrapper implements Groupby
         DataFrame means = this.mean();
         DataFrame result = this.DfCreatorForOperations();
         Value sum=null;
-        int mRowIdx=0;
+        int mRowIdx=0, resultIndex;
 
         for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn).col.add(entry.getValue().columns.get(indexOfGroupingColumn).col.get(0));
+            result.columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.add(entry.getValue().columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.get(0));
+            resultIndex=0;
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
                 if(i==indexOfGroupingColumn)
+                {
+                    resultIndex++;
                     continue;
+                }
                 sum = entry.getValue().columns.get(i).col.get(0);
+                if(sum instanceof DateTimeValue || sum instanceof StringValue)
+                    continue;
                 for(int j=1;j<entry.getValue().Size();j++)
                 {
-                    sum.add(((entry.getValue().columns.get(i).col.get(j)).sub(means.columns.get(i).col.get(mRowIdx))).pow(new IntegerValue(2)));
+                    sum = sum.add(((entry.getValue().columns.get(i).col.get(j)).sub(means.columns.get(resultIndex).col.get(mRowIdx))).pow(new IntegerValue(2)));
                 }
-                result.columns.get(i).col.add(sum.div(new IntegerValue(entry.getValue().Size())));
+                result.columns.get(resultIndex).col.add(sum.div(new IntegerValue(entry.getValue().Size())));
+                resultIndex++;
             }
             mRowIdx++;
         }

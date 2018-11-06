@@ -59,7 +59,7 @@ public class DoubleValue extends Value
     public  Value pow(Value v)
     {
         if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return(new DoubleValue((double) Math.pow(body, (double)v.Get())));
+            return(new DoubleValue((double) Math.pow(body, (double)((int)(v.Get())))));
         else
             throw (new IllegalArgumentException("Exponentiation unavailable for given type"));
     }
