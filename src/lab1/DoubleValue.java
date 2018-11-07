@@ -23,36 +23,61 @@ public class DoubleValue extends Value
 
     public Value add(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
+            return (new DoubleValue(body+(double)((int)v.Get())));
+        if(v instanceof FloatValue)
+            return (new DoubleValue(body+(double)((float)v.Get())));
+        if(v instanceof DoubleValue)
             return (new DoubleValue(body+(double)v.Get()));
         throw (new IllegalArgumentException("Addition unavailable for given type"));
     }
 
     public Value sub(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
+            return (new DoubleValue(body-(double)((int)v.Get())));
+        if(v instanceof FloatValue)
+            return (new DoubleValue(body-(double)((float)v.Get())));
+        if(v instanceof DoubleValue)
             return (new DoubleValue(body-(double)v.Get()));
         throw (new IllegalArgumentException("Substitution unavailable for given type"));
     }
 
     public  Value mul(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
+            return (new DoubleValue(body*(double)((int)v.Get())));
+        if(v instanceof FloatValue)
+            return (new DoubleValue(body*(double)((float)v.Get())));
+        if(v instanceof DoubleValue)
             return (new DoubleValue(body*(double)v.Get()));
         throw (new IllegalArgumentException("Multiplication unavailable for given type"));
     }
 
     public  Value div(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
         {
-            if((double)((int)(v.Get()))!=0.0)
-                return(new DoubleValue(body/(double)((int)(v.Get()))));
+            if(((double)((int)(v.Get())))!=0)
+                return(new DoubleValue(body/(double)((int)v.Get())));
             else
                 throw (new IllegalArgumentException("Division by zero"));
         }
-        else
-            throw (new IllegalArgumentException("Division unavailable for given type"));
+        if(v instanceof FloatValue)
+        {
+            if(((double)((float)(v.Get())))!=0)
+                return(new DoubleValue(body/(double)((float)v.Get())));
+            else
+                throw (new IllegalArgumentException("Division by zero"));
+        }
+        if(v instanceof DoubleValue)
+        {
+            if((double)v.Get()!=0)
+                return(new DoubleValue(body/(double)v.Get()));
+            else
+                throw (new IllegalArgumentException("Division by zero"));
+        }
+        throw (new IllegalArgumentException("Division unavailable for given type"));
 
     }
 

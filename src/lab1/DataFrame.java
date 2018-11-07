@@ -275,9 +275,9 @@ public class DataFrame
         //test.groupby("id").max().Display();
         //test.groupby("id").min().Display();
         //test.groupby("id").mean().Display();
-        test.groupby("id").std().Display();
+        //test.groupby("id").std().Display();
         test.groupby("id").var().Display();
         //test.groupby("id").sum().Display();
     }
-        //DoubleValue ma chwilowo oszukane castowanie -> do poprawy we wszystkich Value
+        //DoubleValue ma chwilowo oszukane castowanie -> do poprawy we wszystkich Value oprócz iny i pół double
 }

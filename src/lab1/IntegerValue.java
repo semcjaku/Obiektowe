@@ -23,83 +23,132 @@ public class IntegerValue extends Value
 	
     public Value add(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
     	    return (new IntegerValue(body+(int)v.Get()));
+        if(v instanceof FloatValue)
+            return (new IntegerValue(body+(int)((float)v.Get())));
+        if(v instanceof DoubleValue)
+            return (new IntegerValue(body+(int)((double)v.Get())));
         throw (new IllegalArgumentException("Addition unavailable for given type"));
     }
     
     public Value sub(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
             return (new IntegerValue(body-(int)v.Get()));
-        throw (new IllegalArgumentException("Substitution unavailable for given type"));
+        if(v instanceof FloatValue)
+            return (new IntegerValue(body-(int)((float)v.Get())));
+        if(v instanceof DoubleValue)
+            return (new IntegerValue(body-(int)((double)v.Get())));
+        throw (new IllegalArgumentException("Subtraction unavailable for given type"));
     }
     
     public  Value mul(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
             return (new IntegerValue(body*(int)v.Get()));
+        if(v instanceof FloatValue)
+            return (new IntegerValue(body*(int)((float)v.Get())));
+        if(v instanceof DoubleValue)
+            return (new IntegerValue(body*(int)((double)v.Get())));
         throw (new IllegalArgumentException("Multiplication unavailable for given type"));
     }
     
     public  Value div(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
         {
             if((int)v.Get()!=0)
                 return(new IntegerValue(body/(int)v.Get()));
             else
                 throw (new IllegalArgumentException("Division by zero"));
         }
-        else
-            throw (new IllegalArgumentException("Division unavailable for given type"));
+        if(v instanceof FloatValue)
+        {
+            if(((int)((float)(v.Get())))!=0)
+                return(new IntegerValue(body/(int)((float)v.Get())));
+            else
+                throw (new IllegalArgumentException("Division by zero"));
+        }
+        if(v instanceof DoubleValue)
+        {
+            if(((int)((double)(v.Get())))!=0)
+                return(new IntegerValue(body/(int)((double)v.Get())));
+            else
+                throw (new IllegalArgumentException("Division by zero"));
+        }
+        throw (new IllegalArgumentException("Division unavailable for given type"));
 
     }
     
     public  Value pow(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
     	    return(new IntegerValue((int)Math.pow(body, (int)v.Get())));
+        if(v instanceof FloatValue)
+            return(new IntegerValue((int)Math.pow(body, (int)((float)(v.Get())))));
+        if(v instanceof DoubleValue)
+            return(new IntegerValue((int)Math.pow(body, (int)((double)(v.Get())))));
         else
             throw (new IllegalArgumentException("Exponentiation unavailable for given type"));
     }
 
     public boolean eq(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
+        if(v instanceof IntegerValue)
     	    return (int)v.Get()==body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))==body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))==body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
     
     public boolean lte(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body<=(int)v.Get();
+        if(v instanceof IntegerValue)
+            return (int)v.Get()<=body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))<=body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))<=body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
     
     public boolean lt(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body<(int)v.Get();
+        if(v instanceof IntegerValue)
+            return (int)v.Get()<body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))<body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))<body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
     
     public boolean gte(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body>=(int)v.Get();
+        if(v instanceof IntegerValue)
+            return (int)v.Get()>=body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))>=body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))>=body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
     
     public boolean gt(Value v)
     {
-        if(v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return body>(int)v.Get();
+        if(v instanceof IntegerValue)
+            return (int)v.Get()>body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))>body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))>body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
