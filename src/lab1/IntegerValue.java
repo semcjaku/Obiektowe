@@ -108,30 +108,6 @@ public class IntegerValue extends Value
     public boolean lte(Value v)
     {
         if(v instanceof IntegerValue)
-            return (int)v.Get()<=body;
-        if(v instanceof FloatValue)
-            return (int)((float)(v.Get()))<=body;
-        if(v instanceof DoubleValue)
-            return (int)((double)(v.Get()))<=body;
-        else
-            throw (new IllegalArgumentException("Incomparable types"));
-    }
-    
-    public boolean lt(Value v)
-    {
-        if(v instanceof IntegerValue)
-            return (int)v.Get()<body;
-        if(v instanceof FloatValue)
-            return (int)((float)(v.Get()))<body;
-        if(v instanceof DoubleValue)
-            return (int)((double)(v.Get()))<body;
-        else
-            throw (new IllegalArgumentException("Incomparable types"));
-    }
-    
-    public boolean gte(Value v)
-    {
-        if(v instanceof IntegerValue)
             return (int)v.Get()>=body;
         if(v instanceof FloatValue)
             return (int)((float)(v.Get()))>=body;
@@ -141,7 +117,7 @@ public class IntegerValue extends Value
             throw (new IllegalArgumentException("Incomparable types"));
     }
     
-    public boolean gt(Value v)
+    public boolean lt(Value v)
     {
         if(v instanceof IntegerValue)
             return (int)v.Get()>body;
@@ -149,6 +125,30 @@ public class IntegerValue extends Value
             return (int)((float)(v.Get()))>body;
         if(v instanceof DoubleValue)
             return (int)((double)(v.Get()))>body;
+        else
+            throw (new IllegalArgumentException("Incomparable types"));
+    }
+    
+    public boolean gte(Value v)
+    {
+        if(v instanceof IntegerValue)
+            return (int)v.Get()<=body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))<=body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))<=body;
+        else
+            throw (new IllegalArgumentException("Incomparable types"));
+    }
+    
+    public boolean gt(Value v)
+    {
+        if(v instanceof IntegerValue)
+            return (int)v.Get()<body;
+        if(v instanceof FloatValue)
+            return (int)((float)(v.Get()))<body;
+        if(v instanceof DoubleValue)
+            return (int)((double)(v.Get()))<body;
         else
             throw (new IllegalArgumentException("Incomparable types"));
     }
