@@ -206,7 +206,7 @@ public class GroupWrapper implements Groupby
                 {
                     sum = sum.add(((entry.getValue().columns.get(i).col.get(j)).sub(means.columns.get(resultIndex).col.get(mRowIdx))).pow(new IntegerValue(2)));
                 }
-                result.columns.get(resultIndex).col.add(sum.div(new IntegerValue(entry.getValue().Size())));
+                result.columns.get(resultIndex).col.add(sum.div(new IntegerValue(entry.getValue().Size()-1)));
                 resultIndex++;
             }
             mRowIdx++;
