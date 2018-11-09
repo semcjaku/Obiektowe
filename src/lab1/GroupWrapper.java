@@ -1,27 +1,26 @@
 package lab1;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class GroupWrapper implements Groupby
 {
-    public HashMap<Value,DataFrame> group;
-    public int indexOfGroupingColumn, omittedColumnsIndexModifier;
+    public HashMap<Value[],DataFrame> group;
+    public int[] indicesOfGroupingColumns, originalIndicesOfColumsIncludedInResult;
 
-    public GroupWrapper(HashMap<Value,DataFrame> groupbyResult, int idx)
+    public GroupWrapper(HashMap<Value[],DataFrame> groupbyResult, int[] idx)
     {
-        group = new HashMap<Value,DataFrame>();
+        group = new HashMap<>();
         group = groupbyResult;
-        indexOfGroupingColumn=idx;
-        omittedColumnsIndexModifier=0;
+        indicesOfGroupingColumns = idx;
+        originalIndicesOfColumsIncludedInResult = null;
     }
 
     public DataFrame DfCreatorForComparisons()
     {
         DataFrame result = new DataFrame();
         //poniższy fragment kodu wyciąga z hashmapy jeden rekord jako Entry
-        HashMap.Entry<Value, DataFrame> nameAndTypeGetter = null;
-        for(HashMap.Entry<Value, DataFrame> entryGetter: group.entrySet()) {
+        HashMap.Entry<Value[], DataFrame> nameAndTypeGetter = null;
+        for(HashMap.Entry<Value[], DataFrame> entryGetter: group.entrySet()) {
             nameAndTypeGetter = entryGetter;
             break;
         }
@@ -38,19 +37,35 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = new DataFrame();
         //poniższy fragment kodu wyciąga z hashmapy jeden rekord jako Entry
-        HashMap.Entry<Value, DataFrame> nameAndTypeGetter = null;
-        for(HashMap.Entry<Value, DataFrame> entryGetter: group.entrySet()) {
+        HashMap.Entry<Value[], DataFrame> nameAndTypeGetter = null;
+        for(HashMap.Entry<Value[], DataFrame> entryGetter: group.entrySet()) {
             nameAndTypeGetter = entryGetter;
             break;
         }
         //vvv tworzy puste kolumny właściwych typów w wynikowym df vvv
+        originalIndicesOfColumsIncludedInResult = new int[nameAndTypeGetter.getValue().columns.size()];
+        int indexInArrayOfOriginalIndices = 0;
         for(int i=0;i<nameAndTypeGetter.getValue().columns.size(); i++)
         {
-            if(!(i!=indexOfGroupingColumn && (nameAndTypeGetter.getValue().columns.get(i).columnType==StringValue.class || nameAndTypeGetter.getValue().columns.get(i).columnType==DateTimeValue.class)))
+            boolean currentColumnIsGroupingColumn = false;
+            for(int x : indicesOfGroupingColumns)
+            {
+                if(i==x)
+                {
+                    currentColumnIsGroupingColumn = true;
+                    break;
+                }
+            }
+            if(currentColumnIsGroupingColumn || !(nameAndTypeGetter.getValue().columns.get(i).columnType==StringValue.class || nameAndTypeGetter.getValue().columns.get(i).columnType==DateTimeValue.class))
+            {
                 result.columns.add(new Column(nameAndTypeGetter.getValue().columns.get(i).columnName,nameAndTypeGetter.getValue().columns.get(i).columnType));
-            else if(i<indexOfGroupingColumn)
-                omittedColumnsIndexModifier++;
+                originalIndicesOfColumsIncludedInResult[indexInArrayOfOriginalIndices]=i;
+                indexInArrayOfOriginalIndices++;
+            }
         }
+
+        for(int i=indexInArrayOfOriginalIndices;i<originalIndicesOfColumsIncludedInResult.length;i++)
+            originalIndicesOfColumsIncludedInResult[i]=-1;
 
         return result;
     }
@@ -59,13 +74,26 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForComparisons();
         Value maximum=null;
+        boolean currentColumnIsGroupingColumn;
 
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn).col.add(entry.getValue().columns.get(indexOfGroupingColumn).col.get(0));
+            for(int id:indicesOfGroupingColumns)
+            {
+                result.columns.get(id).col.add(entry.getValue().columns.get(id).col.get(0));
+            }
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
-                if(i==indexOfGroupingColumn)
+                currentColumnIsGroupingColumn = false;
+                for(int x : indicesOfGroupingColumns)
+                {
+                    if(i==x)
+                    {
+                        currentColumnIsGroupingColumn = true;
+                        break;
+                    }
+                }
+                if(currentColumnIsGroupingColumn)
                     continue;
                 maximum = entry.getValue().columns.get(i).col.get(0);
                 for(int j=1;j<entry.getValue().Size();j++)
@@ -83,13 +111,27 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForComparisons();
         Value minimum=null;
+        boolean currentColumnIsGroupingColumn;
+        int originalIndexOfGroupingColumn = -1;
 
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn).col.add(entry.getValue().columns.get(indexOfGroupingColumn).col.get(0));
+            for(int id:indicesOfGroupingColumns)
+            {
+                result.columns.get(id).col.add(entry.getValue().columns.get(id).col.get(0));
+            }
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
-                if(i==indexOfGroupingColumn)
+                currentColumnIsGroupingColumn = false;
+                for(int x : indicesOfGroupingColumns)
+                {
+                    if(i==x)
+                    {
+                        currentColumnIsGroupingColumn = true;
+                        break;
+                    }
+                }
+                if(currentColumnIsGroupingColumn)
                     continue;
                 minimum = entry.getValue().columns.get(i).col.get(0);
                 for(int j=1;j<entry.getValue().Size();j++)
@@ -107,15 +149,36 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForOperations();
         Value sum=null;
-        int resultIndex;
+        int resultIndex, originalIndexOfGroupingColumn = -1;
+        boolean currentColumnIsGroupingColumn;
 
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.add(entry.getValue().columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.get(0));
+            for(int i=0;i<indicesOfGroupingColumns.length;i++)
+            {
+                for(int x : originalIndicesOfColumsIncludedInResult)
+                {
+                    if(i==x)
+                    {
+                        originalIndexOfGroupingColumn = x;
+                        break;
+                    }
+                }
+                result.columns.get(originalIndexOfGroupingColumn).col.add(entry.getValue().columns.get(originalIndexOfGroupingColumn).col.get(0));
+            }
             resultIndex=0;
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
-                if(i==indexOfGroupingColumn)
+                currentColumnIsGroupingColumn = false;
+                for(int x : indicesOfGroupingColumns)
+                {
+                    if(i==x)
+                    {
+                        currentColumnIsGroupingColumn = true;
+                        break;
+                    }
+                }
+                if(currentColumnIsGroupingColumn)
                 {
                     resultIndex++;
                     continue;
@@ -137,10 +200,20 @@ public class GroupWrapper implements Groupby
     @Override public DataFrame std()
     {
         DataFrame result = this.var();
+        boolean currentColumnIsGroupingColumn;
 
         for(int i=0;i<result.columns.size();i++)
         {
-            if(i==indexOfGroupingColumn)
+            currentColumnIsGroupingColumn = false;
+            for(int x : indicesOfGroupingColumns)
+            {
+                if(i==x)
+                {
+                    currentColumnIsGroupingColumn = true;
+                    break;
+                }
+            }
+            if(currentColumnIsGroupingColumn)
                 continue;
             for(int j=0;j<result.Size();j++)
             {
@@ -154,15 +227,36 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForOperations();
         Value sum=null;
-        int resultIndex;
+        int resultIndex, originalIndexOfGroupingColumn = -1;
+        boolean currentColumnIsGroupingColumn;
 
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.add(entry.getValue().columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.get(0));
+            for(int i=0;i<indicesOfGroupingColumns.length;i++)
+            {
+                for(int x : originalIndicesOfColumsIncludedInResult)
+                {
+                    if(i==x)
+                    {
+                        originalIndexOfGroupingColumn = x;
+                        break;
+                    }
+                }
+                result.columns.get(originalIndexOfGroupingColumn).col.add(entry.getValue().columns.get(originalIndexOfGroupingColumn).col.get(0));
+            }
             resultIndex=0;
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
-                if(i==indexOfGroupingColumn)
+                currentColumnIsGroupingColumn = false;
+                for(int x : indicesOfGroupingColumns)
+                {
+                    if(i==x)
+                    {
+                        currentColumnIsGroupingColumn = true;
+                        break;
+                    }
+                }
+                if(currentColumnIsGroupingColumn)
                 {
                     resultIndex++;
                     continue;
@@ -186,15 +280,36 @@ public class GroupWrapper implements Groupby
         DataFrame means = this.mean();
         DataFrame result = this.DfCreatorForOperations();
         Value sum=null;
-        int mRowIdx=0, resultIndex;
+        int mRowIdx=0, resultIndex, originalIndexOfGroupingColumn = -1;
+        boolean currentColumnIsGroupingColumn;
 
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
-            result.columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.add(entry.getValue().columns.get(indexOfGroupingColumn-omittedColumnsIndexModifier).col.get(0));
+            for(int i=0;i<indicesOfGroupingColumns.length;i++)
+            {
+                for(int x : originalIndicesOfColumsIncludedInResult)
+                {
+                    if(i==x)
+                    {
+                        originalIndexOfGroupingColumn = x;
+                        break;
+                    }
+                }
+                result.columns.get(originalIndexOfGroupingColumn).col.add(entry.getValue().columns.get(originalIndexOfGroupingColumn).col.get(0));
+            }
             resultIndex=0;
             for(int i=0;i<entry.getValue().columns.size();i++)
             {
-                if(i==indexOfGroupingColumn)
+                currentColumnIsGroupingColumn = false;
+                for(int x : indicesOfGroupingColumns)
+                {
+                    if(i==x)
+                    {
+                        currentColumnIsGroupingColumn = true;
+                        break;
+                    }
+                }
+                if(currentColumnIsGroupingColumn)
                 {
                     resultIndex++;
                     continue;
@@ -218,7 +333,7 @@ public class GroupWrapper implements Groupby
     {
         DataFrame result = this.DfCreatorForOperations();
         DataFrame tmp = null;
-        for (HashMap.Entry<Value, DataFrame> entry : group.entrySet())
+        for (HashMap.Entry<Value[], DataFrame> entry : group.entrySet())
         {
             tmp = a.apply(entry.getValue());
             for(int i=0;i<tmp.Size();i++)

@@ -1,9 +1,6 @@
 package lab1;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class DataFrame
 {
@@ -188,34 +185,27 @@ public class DataFrame
         }
     }
 
-    public GroupWrapper groupby(String colname)
+    boolean CustomContainsKey(HashMap<Value[], DataFrame> container, Value[] key)
     {
-        HashMap<Value, DataFrame> groupingResult = new HashMap<Value, DataFrame>();
-        int indexOfBy = -1;
-        for (Column c:columns)
-            if (c.columnName.equals(colname))
-            {
-                indexOfBy = columns.indexOf(c);
-                break;
-            }
-        if(indexOfBy==-1)
-            throw new RuntimeException("No such column");
-
-        for(int i=0; i<this.Size();i++)
+        int equalityRate;
+        for (HashMap.Entry<Value[], DataFrame> entry : container.entrySet())
         {
-            if (!groupingResult.containsKey(columns.get(indexOfBy).col.get(i)))
+            equalityRate=0;
+            for(int i=0;i<key.length;i++)
             {
-                groupingResult.put(columns.get(indexOfBy).col.get(i), this.Iloc(i));
+                if(entry.getKey()[i].eq(key[i]))
+                    equalityRate++;
             }
-            else
-            {
-                groupingResult.get(columns.get(indexOfBy).col.get(i)).addRow(this.Iloc(i));
-            }
+            if(equalityRate==key.length)
+                return true;
         }
-        return new GroupWrapper(groupingResult,indexOfBy);
+        return false;
+    }
 
-        //different, unworking version
-        /*int[] indicesOfBy = new int[colnames.length];
+    public GroupWrapper groupby(String[] colnames)
+    {
+        HashMap<Value[], DataFrame> groupingResult = new HashMap<>();
+        int[] indicesOfBy = new int[colnames.length];
         for(int i=0;i<indicesOfBy.length;i++)
             indicesOfBy[i]=-1;
 
@@ -229,23 +219,42 @@ public class DataFrame
                 }
         }
         for(int id : indicesOfBy)
-            if(id==-1)
-                throw new RuntimeException("No such column");*/
-    }
-
-    /*public GroupWrapper groupby(String[] colnames)
-    {
-        GroupWrapper result = this.groupby(colnames[0]);
-        DataFrame tmpDf = null;
-        for(int i=1;i<colnames.length;i++)
         {
-            for (HashMap.Entry<Value, DataFrame> entry : result.group.entrySet())
+            if(id==-1)
+                throw new RuntimeException("No such column");
+        }
+
+        for(int i=0; i<this.Size();i++)
+        {
+            Value currentTuple[] = new Value[colnames.length];
+            for(int j=0;j<currentTuple.length;j++)
             {
-                entry.getValue().groupby(colnames[i]);
+                currentTuple[j] = columns.get(indicesOfBy[j]).col.get(i);
+            }
+            if (!this.CustomContainsKey(groupingResult,currentTuple))
+            {
+                groupingResult.put(currentTuple, this.Iloc(i));
+            }
+            else
+            {
+                int equalityRate;
+                Value[] tmp = currentTuple;
+                for (HashMap.Entry<Value[], DataFrame> entry : groupingResult.entrySet())
+                {
+                    equalityRate=0;
+                    for(int x=0;x<currentTuple.length;x++)
+                    {
+                        if(entry.getKey()[x].eq(currentTuple[x]))
+                            equalityRate++;
+                    }
+                    if(equalityRate==currentTuple.length)
+                        tmp = entry.getKey();
+                }
+                groupingResult.get(tmp).addRow(this.Iloc(i));
             }
         }
-        return result;
-    }*/
+        return new GroupWrapper(groupingResult,indicesOfBy);
+    }
 
     public void DisplayRow(int index)
     {
@@ -271,13 +280,21 @@ public class DataFrame
         types[1] = DateTimeValue.class;
         types[2] = DoubleValue.class;
         types[3] = DoubleValue.class;
-        DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
-        //test.groupby("id").max().Display();
-        //test.groupby("id").min().Display();
-        //test.groupby("id").mean().Display();
-        //test.groupby("id").std().Display();
-        //test.groupby("id").var().Display();
-        //test.groupby("id").sum().Display();
-    }
+        //DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
+        //test.groupby(new String[]{"id"}).max().Display();
+        //test.groupby(new String[]{"id"}).min().Display();
+        //test.groupby(new String[]{"id"}).mean().Display();
+        //test.groupby(new String[]{"id"}).std().Display();
+        //test.groupby(new String[]{"id"}).var().Display();
+        //test.groupby(new String[]{"id"}).sum().Display();
 
+        DataFrame test2 = new DataFrame("/C:/Temp/groubymulti.csv", types);
+        //test2.groupby(new String[]{"id","date"}).max().Display();
+        //test2.groupby(new String[]{"id","date"}).min().Display();
+        //test2.groupby(new String[]{"id","date"}).mean().Display();
+        //test2.groupby(new String[]{"id","date"}).std().Display();
+        //test2.groupby(new String[]{"id","date"}).var().Display();
+        //test2.groupby(new String[]{"id","date"}).sum().Display();
+    }
+        //Wyniki nie pokolei -> czemu???
 }
