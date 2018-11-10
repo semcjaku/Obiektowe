@@ -38,6 +38,76 @@ public class Column implements Cloneable
         return result;
     }
 
+    public void Add(Value v)
+    {
+        for(Value tmp:col)
+            tmp.add(v);
+    }
+
+    public void Sub(Value v)
+    {
+        for(Value tmp:col)
+            tmp.sub(v);
+    }
+
+    public void Mul(Value v)
+    {
+        for(Value tmp:col)
+            tmp.mul(v);
+    }
+
+    public void Div(Value v)
+    {
+        for(Value tmp:col)
+            tmp.div(v);
+    }
+
+    public void Pow(Value v)
+    {
+        for(Value tmp:col)
+            tmp.pow(v);
+    }
+
+    public void Add(Column c)
+    {
+        if(col.size()!=c.col.size())
+            throw new IllegalArgumentException("Columns: "+columnName+" and "+c.columnName+" have different length.");
+        for(int i=0;i<col.size();i++)
+            col.get(i).add(c.col.get(i));
+    }
+
+    public void Sub(Column c)
+    {
+        if(col.size()!=c.col.size())
+            throw new IllegalArgumentException("Columns: "+columnName+" and "+c.columnName+" have different length.");
+        for(int i=0;i<col.size();i++)
+            col.get(i).sub(c.col.get(i));
+    }
+
+    public void Mul(Column c)
+    {
+        if(col.size()!=c.col.size())
+            throw new IllegalArgumentException("Columns: "+columnName+" and "+c.columnName+" have different length.");
+        for(int i=0;i<col.size();i++)
+            col.get(i).mul(c.col.get(i));
+    }
+
+    public void Div(Column c)
+    {
+        if(col.size()!=c.col.size())
+            throw new IllegalArgumentException("Columns: "+columnName+" and "+c.columnName+" have different length.");
+        for(int i=0;i<col.size();i++)
+            col.get(i).div(c.col.get(i));
+    }
+
+    public void Pow(Column c)
+    {
+        if(col.size()!=c.col.size())
+            throw new IllegalArgumentException("Columns: "+columnName+" and "+c.columnName+" have different length.");
+        for(int i=0;i<col.size();i++)
+            col.get(i).pow(c.col.get(i));
+    }
+
     @Override
     protected Column clone() {
     try {

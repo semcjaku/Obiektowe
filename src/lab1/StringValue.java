@@ -28,12 +28,12 @@ public class StringValue extends Value
 
     public  Value sub(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public  Value mul(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public  Value div(Value v)
@@ -44,7 +44,7 @@ public class StringValue extends Value
 
     public  Value pow(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public boolean eq(Value v)
@@ -54,22 +54,22 @@ public class StringValue extends Value
 
     public boolean lte(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public boolean lt(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public boolean gte(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public boolean gt(Value v)
     {
-        throw new RuntimeException("Invalid operation for StringValue type");
+        throw new UnavailableOperationException("Invalid operation for StringValue type");
     }
 
     public boolean neq(Value v)
