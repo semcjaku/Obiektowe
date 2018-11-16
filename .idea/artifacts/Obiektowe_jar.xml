@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Obiektowe:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Obiektowe_jar</output-path>
+    <root id="archive" name="Obiektowe.jar">
+      <element id="module-output" name="Obiektowe" />
+    </root>
+  </artifact>
+</component>
