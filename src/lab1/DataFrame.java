@@ -42,12 +42,9 @@ public class DataFrame
             }
             else if(!header)
             {
-                Scanner keyboard = new Scanner(System.in);
                 for(int i=0; i<coltypes.length;i++)
                 {
-                    System.out.println("Enter the name of column number" + (i+1));
-                    name = keyboard.nextLine();
-                    columns.add(new Column(name,coltypes[i]));
+                    columns.add(new Column("Col"+(i+1),coltypes[i]));
                 }
             }
 
@@ -273,7 +270,7 @@ public class DataFrame
             this.DisplayRow(i);
     }
 
-    public static void main(String[] argv)
+    /*public static void main(String[] argv)
     {
         Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
         types[0] = StringValue.class;
@@ -295,6 +292,5 @@ public class DataFrame
         //test2.groupby(new String[]{"id","date"}).std().Display();
         //test2.groupby(new String[]{"id","date"}).var().Display();
         //test2.groupby(new String[]{"id","date"}).sum().Display();
-    }
-        //Wyniki nie pokolei -> czemu???
+    }*/
 }
