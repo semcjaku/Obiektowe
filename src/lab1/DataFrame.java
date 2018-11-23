@@ -203,6 +203,7 @@ public class DataFrame
     {
         HashMap<Value[], DataFrame> groupingResult = new HashMap<>();
         int[] indicesOfBy = new int[colnames.length];
+
         for(int i=0;i<indicesOfBy.length;i++)
             indicesOfBy[i]=-1;
 
@@ -289,11 +290,11 @@ public class DataFrame
 
     /*public static void main(String[] argv)
     {
-        Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
-        types[0] = StringValue.class;
-        types[1] = DateTimeValue.class;
-        types[2] = DoubleValue.class;
-        types[3] = DoubleValue.class;
+        //Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
+        //types[0] = StringValue.class;
+        //types[1] = DateTimeValue.class;
+        //types[2] = DoubleValue.class;
+        //types[3] = DoubleValue.class;
         //DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
         //test.groupby(new String[]{"id"}).max().Display();
         //test.groupby(new String[]{"id"}).min().Display();
@@ -302,7 +303,7 @@ public class DataFrame
         //test.groupby(new String[]{"id"}).var().Display();
         //test.groupby(new String[]{"id"}).sum().Display();
 
-        DataFrame test2 = new DataFrame("/C:/Temp/groubymulti.csv", types);
+        //DataFrame test2 = new DataFrame("/C:/Temp/groubymulti.csv", types);
         //test2.groupby(new String[]{"id","date"}).max().Display();
         //test2.groupby(new String[]{"id","date"}).min().Display();
         //test2.groupby(new String[]{"id","date"}).mean().Display();

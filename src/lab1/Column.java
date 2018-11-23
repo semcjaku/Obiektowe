@@ -5,7 +5,7 @@ public class Column implements Cloneable
 {
     String columnName;
     Class<? extends Value> columnType;
-    ArrayList<Value> col;
+    public ArrayList<Value> col;
     public Column(String name, Class<? extends Value> type)
     {
         //Class<?> class_def = null;
