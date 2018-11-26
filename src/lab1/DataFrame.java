@@ -271,19 +271,31 @@ public class DataFrame
             this.DisplayRow(i);
     }
 
-    public String asString()
+    public String ColumnNamesAsString()
     {
         StringBuilder output = new StringBuilder();
         for(Column c:columns)
             output.append(c.columnName+' ');
+        return output.toString();
+    }
+
+    public String RowAsString(int idx)
+    {
+        StringBuilder output = new StringBuilder();
+        for(int j=0;j<columns.size();j++)
+        {
+            output.append(columns.get(j).col.get(idx).toString()+' ');
+        }
+        return output.toString();
+    }
+
+    public String asString()
+    {
+        StringBuilder output = new StringBuilder(this.ColumnNamesAsString());
         output.append("\n\r");
         for(int i=0;i<this.Size();i++)
         {
-            for(int j=0;j<columns.size();j++)
-            {
-                output.append(columns.get(j).col.get(i).toString()+' ');
-            }
-            output.append("\n\r");
+            output.append(this.RowAsString(i)+"\n\r");
         }
         return output.toString();
     }
