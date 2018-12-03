@@ -300,7 +300,7 @@ public class DataFrame
         return output.toString();
     }
 
-    /*public static void main(String[] argv)
+    public static void main(String[] argv)
     {
         //Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
         //types[0] = StringValue.class;
@@ -322,5 +322,5 @@ public class DataFrame
         //test2.groupby(new String[]{"id","date"}).std().Display();
         //test2.groupby(new String[]{"id","date"}).var().Display();
         //test2.groupby(new String[]{"id","date"}).sum().Display();
-    }*/
+    }
 }
