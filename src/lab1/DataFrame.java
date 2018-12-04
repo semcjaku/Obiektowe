@@ -279,35 +279,56 @@ public class DataFrame
         return output.toString();
     }
 
-    public String RowAsString(int idx)
+    public String RowAsString(int idx, boolean csv)
     {
+        String separator;
+        if(csv)
+            separator = ",";
+        else
+            separator = " ";
         StringBuilder output = new StringBuilder();
-        for(int j=0;j<columns.size();j++)
+        for(int j=0;j<columns.size()-1;j++)
         {
-            output.append(columns.get(j).col.get(idx).toString()+' ');
+            output.append(columns.get(j).col.get(idx).toString()+separator);
         }
+        output.append(columns.get(columns.size()-1).col.get(idx).toString());
         return output.toString();
     }
 
     public String asString()
     {
+        return this.asString(false);
+    }
+
+    public String asString(boolean csv)
+    {
         StringBuilder output = new StringBuilder(this.ColumnNamesAsString());
-        output.append("\n\r");
+        output.append("\n");
         for(int i=0;i<this.Size();i++)
         {
-            output.append(this.RowAsString(i)+"\n\r");
+            output.append(this.RowAsString(i,csv)+"\n");
         }
+        if(csv)
+            output.append("\u001a");
         return output.toString();
+    }
+
+    public void ToFile() throws IOException
+    {
+        String fileContent = this.asString(true);
+        BufferedWriter writer = new BufferedWriter(new FileWriter("c:/temp/samplefile1.csv"));
+        writer.write(fileContent);
+        writer.close();
     }
 
     public static void main(String[] argv)
     {
-        //Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
-        //types[0] = StringValue.class;
-        //types[1] = DateTimeValue.class;
-        //types[2] = DoubleValue.class;
-        //types[3] = DoubleValue.class;
-        //DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
+        Class<? extends Value>[] types = (Class<? extends Value>[]) new Class<?>[4];
+        types[0] = StringValue.class;
+        types[1] = DateTimeValue.class;
+        types[2] = DoubleValue.class;
+        types[3] = DoubleValue.class;
+        DataFrame test = new DataFrame("/C:/Temp/groupby.csv", types);
         //test.groupby(new String[]{"id"}).max().Display();
         //test.groupby(new String[]{"id"}).min().Display();
         //test.groupby(new String[]{"id"}).mean().Display();
