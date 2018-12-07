@@ -5,7 +5,7 @@ public class DBClient{
     private Connection conn = null;
     private Statement stmt = null;
     private ResultSet rs = null;
-    private String query = null;
+    public String query = null;
 
     public void connect(){
         try {
@@ -18,8 +18,9 @@ public class DBClient{
         }catch(Exception e){e.printStackTrace();}
     }
 
-    public void Select()
+    public String Select()
     {
+        StringBuilder result = new StringBuilder();
         try {
             connect();
             stmt = conn.createStatement();
@@ -34,13 +35,13 @@ public class DBClient{
                 for(int i=1;i<columnsNumber+1;i++)
                 {
                     String book = rs.getString(i);
-                    System.out.print(book+" ");
+                    result.append(book+" ");
                 }
-                System.out.println();
+                result.append("\n");
             }
         }catch (SQLException ex){
             ex.printStackTrace();
-        }finally {
+        } finally {
             // zwalniamy zasoby, które nie będą potrzebne
             if (rs != null) {
                 try {
@@ -57,24 +58,51 @@ public class DBClient{
                 stmt = null;
             }
         }
+        return result.toString();
     }
 
-    public void SelectAll()
+    public String SelectAll()
     {
         query="SELECT * FROM books";
-        Select();
+        return Select();
     }
 
-    public void SelectByISBN(String isbn)
+    public String SelectByISBN(String isbn)
     {
         query="SELECT * FROM books WHERE isbn="+isbn;
-        Select();
+        return Select();
     }
 
-    public void SelectByAuthor(String author)
+    public String SelectByAuthor(String author)
     {
         query="SELECT * FROM books WHERE author LIKE '%"+author+"'";
-        Select();
+        return Select();
+    }
+
+    public void Insert(String[] values)
+    {
+        try
+        {
+            String insertQuery = "INSERT INTO books VALUES ";
+            connect();
+            stmt = conn.createStatement();
+            for(int i=0;i<values.length-1;i++)
+                insertQuery+="("+values[i]+"),";
+            insertQuery+="("+values[values.length-1]+")";
+            stmt.executeQuery(insertQuery);
+
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+
+                stmt = null;
+            }
+        }
+
     }
 
     public static void main(String[] args)
@@ -82,7 +110,8 @@ public class DBClient{
         DBClient dbc = new DBClient();
         //dbc.SelectAll();
         //dbc.SelectByISBN("1234567891234");
-        dbc.SelectByAuthor("Huxley");
+        //dbc.SelectByAuthor("Huxley");
+        System.out.print(dbc.SelectAll());
     }
 } 
 

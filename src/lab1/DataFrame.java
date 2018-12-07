@@ -279,43 +279,48 @@ public class DataFrame
         return output.toString();
     }
 
-    public String RowAsString(int idx, boolean csv)
+    public String RowAsString(int idx, String format)
     {
         String separator;
-        if(csv)
+        if(format.equals("csv")||format.equals("sql"))
             separator = ",";
         else
             separator = " ";
         StringBuilder output = new StringBuilder();
-        for(int j=0;j<columns.size()-1;j++)
+        for(int j=0;j<columns.size();j++)
         {
-            output.append(columns.get(j).col.get(idx).toString()+separator);
+            if(format.equals("sql"))
+                output.append("\'");
+            output.append(columns.get(j).col.get(idx).toString());
+            if(format.equals("sql"))
+                output.append("\'");
+            if(j!=columns.size()-1)
+                output.append(separator);
         }
-        output.append(columns.get(columns.size()-1).col.get(idx).toString());
         return output.toString();
     }
 
     public String asString()
     {
-        return this.asString(false);
+        return this.asString("");
     }
 
-    public String asString(boolean csv)
+    public String asString(String format)
     {
         StringBuilder output = new StringBuilder(this.ColumnNamesAsString());
         output.append("\n");
         for(int i=0;i<this.Size();i++)
         {
-            output.append(this.RowAsString(i,csv)+"\n");
+            output.append(this.RowAsString(i,format)+"\n");
         }
-        if(csv)
+        if(format.equals("csv"))
             output.append("\u001a");
         return output.toString();
     }
 
     public void ToFile() throws IOException
     {
-        String fileContent = this.asString(true);
+        String fileContent = this.asString("csv");
         BufferedWriter writer = new BufferedWriter(new FileWriter("c:/temp/samplefile1.csv"));
         writer.write(fileContent);
         writer.close();
